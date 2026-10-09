@@ -1,0 +1,6 @@
+{
+  "name": "Minh Tiến In Ấn & Quảng Cáo",
+  "description": "Minh Tiến In Ấn & Quảng Cáo – thiết kế, in ấn, bảng hiệu, quảng cáo và các sản phẩm in ấn chuyên nghiệp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

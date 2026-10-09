@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #18181B;
+    background-color: #FDFBF9;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  html.dark {
+    color: #F3F4F6;
+    background-color: #0B0C10;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  html.dark body {
+    background-color: #0B0C10;
+    color: #F3F4F6;
+  }
+}
+
+.font-serif-display {
+  font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+}
+
+/* Subtle custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F4F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4D4D8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A1A1AA;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #121319;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2A2D3C;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3E4358;
+}
+
+/* Soft drifting pastel ambient animations */
+@keyframes pastelDriftA {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -25px) scale(1.08);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes pastelDriftB {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-35px, 25px) scale(0.94);
+  }
+  66% {
+    transform: translate(25px, -30px) scale(1.06);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes pastelDriftC {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(25px, 35px) scale(1.1);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes pastelWave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-pastel-drift-a {
+  animation: pastelDriftA 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-pastel-drift-b {
+  animation: pastelDriftB 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-pastel-drift-c {
+  animation: pastelDriftC 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+.pastel-flow-bg {
+  background: linear-gradient(125deg, #FFF7ED 0%, #FEF2F2 20%, #FAF5FF 45%, #F0FDF4 70%, #FFFBEB 100%);
+  background-size: 250% 250%;
+  animation: pastelWave 18s ease-in-out infinite;
+}
+
+/* Horizontal continuous running banner & ticker marquee */
+@keyframes marqueeHorizontal {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marqueeHorizontal 32s linear infinite;
+}
+
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
+
+/* Responsive Google Maps wrapper */
+.map-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.map-container iframe {
+  width: 100%;
+  min-height: 420px;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .map-container iframe {
+    min-height: 350px;
+    height: 350px;
+  }
+}
+
+@media (min-width: 641px) {
+  .map-container iframe {
+    min-height: 450px;
+    height: 450px;
+  }
+}
+
+/* ==========================================================================
+   MINH TIẾN — Glowing Animated Brand Logo Keyframes & Utilities
+   ========================================================================== */
+@keyframes logoGlowPulse {
+  0%, 100% {
+    transform: scale(0.96);
+    opacity: 0.5;
+    filter: blur(10px);
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.95;
+    filter: blur(16px);
+  }
+}
+
+@keyframes logoShimmerSweep {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+  }
+  35%, 100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+@keyframes logoBorderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes logoSparkleGlint {
+  0%, 100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  18%, 32% {
+    transform: scale(1.15) rotate(45deg);
+    opacity: 1;
+  }
+  42% {
+    transform: scale(0.6) rotate(90deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(0) rotate(135deg);
+    opacity: 0;
+  }
+}
+
+@keyframes logoFloatSubtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.animate-logo-glow {
+  animation: logoGlowPulse 3.5s ease-in-out infinite;
+  will-change: transform, opacity, filter;
+}
+
+.animate-logo-shimmer {
+  animation: logoShimmerSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+.animate-logo-border {
+  animation: logoBorderRotate 7s linear infinite;
+  will-change: transform;
+}
+
+.animate-logo-sparkle {
+  animation: logoSparkleGlint 4.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-logo-float {
+  animation: logoFloatSubtle 3.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+
