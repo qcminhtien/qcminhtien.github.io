@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import { PastelAmbientBackground } from './components/PastelAmbientBackground';
 import { MobileStickyBar } from './components/MobileStickyBar';
 import { FloatingThemeToggle } from './components/FloatingThemeToggle';
@@ -87,7 +88,7 @@ const ServicesOverview = lazy(() =>
 
 const pageFallback = (
   <div className="min-h-[45vh] flex items-center justify-center px-6">
-    <div className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-white/80 px-4 py-2 text-sm font-medium text-orange-700 shadow-sm backdrop-blur-sm dark:border-orange-900/60 dark:bg-slate-950/60 dark:text-orange-300">
+    <div className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-white/80 px-4 py-2 text-sm font-medium text-orange-700 shadow-sm backdrop-blur-sm dark:border-orange-900/60 dark:bg-[#111827]/80 dark:text-orange-300">
       <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-orange-500" />
       Đang tải nội dung...
     </div>
@@ -268,7 +269,7 @@ export default function App() {
       <main className="space-y-0 relative z-10">
         <SEOHead
           title="Minh Tiến – In Ấn, Bảng Hiệu Quảng Cáo & Dịch Vụ In Ảnh Hình Thẻ Lấy Ngay Kiên Lương"
-          description="Cơ sở Minh Tiến (160 Quốc lộ 80, Kiên Lương, An Giang) chuyên thiết kế thi công bảng hiệu quảng cáo, in ấn name card, catalogue, tem nhãn, hóa đơn và chụp hình thẻ."
+          description="Cơ sở Minh Tiến (160 Quốc lộ 80, Kiên Lương, An Giang) chuyên thiết kế thi công bảng hiệu quảng cáo, in ấn name card, catalogue, tem nhãn, hóa đơn, thiệp cưới và chụp hình thẻ lấy ngay."
           canonicalPath="/"
           faqItems={FAQS}
         />
