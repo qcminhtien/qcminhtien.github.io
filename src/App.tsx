@@ -1,29 +1,98 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
-import { TopPanoramicBanner } from './components/TopPanoramicBanner';
-import { Hero } from './components/Hero';
-import { HomeSummarySection } from './components/HomeSummarySection';
-import { SignageCategoryPage } from './components/SignageCategoryPage';
-import { PrintingCategoryPage } from './components/PrintingCategoryPage';
-import { PhotoIdPage } from './components/PhotoIdPage';
-import { MoneyTransferPage } from './components/MoneyTransferPage';
-import { FacilityShowcase } from './components/FacilityShowcase';
-import { ProductCategoryShowcase } from './components/ProductCategoryShowcase';
 import { PastelAmbientBackground } from './components/PastelAmbientBackground';
-import { ServicesOverview } from './components/ServicesOverview';
-import { PortfolioSection } from './components/PortfolioSection';
-import { LocationMapSection } from './components/LocationMapSection';
-import { ContactSection } from './components/ContactSection';
-import { FAQSection } from './components/FAQSection';
-import { Footer } from './components/Footer';
 import { MobileStickyBar } from './components/MobileStickyBar';
-import { ServiceDetailPage } from './components/ServiceDetailPage';
-import { QuoteModal } from './components/QuoteModal';
 import { FloatingThemeToggle } from './components/FloatingThemeToggle';
+import { QuoteModal } from './components/QuoteModal';
 import { SEOHead } from './components/SEOHead';
 import { RealImageProvider } from './context/RealImageStore';
 import { SERVICES, FAQS } from './data/siteData';
 import { ServiceItem } from './types';
+
+const TopPanoramicBanner = lazy(() =>
+  import('./components/TopPanoramicBanner').then((module) => ({
+    default: module.TopPanoramicBanner,
+  }))
+);
+const Hero = lazy(() =>
+  import('./components/Hero').then((module) => ({
+    default: module.Hero,
+  }))
+);
+const HomeSummarySection = lazy(() =>
+  import('./components/HomeSummarySection').then((module) => ({
+    default: module.HomeSummarySection,
+  }))
+);
+const FAQSection = lazy(() =>
+  import('./components/FAQSection').then((module) => ({
+    default: module.FAQSection,
+  }))
+);
+const SignageCategoryPage = lazy(() =>
+  import('./components/SignageCategoryPage').then((module) => ({
+    default: module.SignageCategoryPage,
+  }))
+);
+const PrintingCategoryPage = lazy(() =>
+  import('./components/PrintingCategoryPage').then((module) => ({
+    default: module.PrintingCategoryPage,
+  }))
+);
+const PhotoIdPage = lazy(() =>
+  import('./components/PhotoIdPage').then((module) => ({
+    default: module.PhotoIdPage,
+  }))
+);
+const MoneyTransferPage = lazy(() =>
+  import('./components/MoneyTransferPage').then((module) => ({
+    default: module.MoneyTransferPage,
+  }))
+);
+const ServiceDetailPage = lazy(() =>
+  import('./components/ServiceDetailPage').then((module) => ({
+    default: module.ServiceDetailPage,
+  }))
+);
+const FacilityShowcase = lazy(() =>
+  import('./components/FacilityShowcase').then((module) => ({
+    default: module.FacilityShowcase,
+  }))
+);
+const ContactSection = lazy(() =>
+  import('./components/ContactSection').then((module) => ({
+    default: module.ContactSection,
+  }))
+);
+const LocationMapSection = lazy(() =>
+  import('./components/LocationMapSection').then((module) => ({
+    default: module.LocationMapSection,
+  }))
+);
+const ProductCategoryShowcase = lazy(() =>
+  import('./components/ProductCategoryShowcase').then((module) => ({
+    default: module.ProductCategoryShowcase,
+  }))
+);
+const PortfolioSection = lazy(() =>
+  import('./components/PortfolioSection').then((module) => ({
+    default: module.PortfolioSection,
+  }))
+);
+const ServicesOverview = lazy(() =>
+  import('./components/ServicesOverview').then((module) => ({
+    default: module.ServicesOverview,
+  }))
+);
+
+const pageFallback = (
+  <div className="min-h-[45vh] flex items-center justify-center px-6">
+    <div className="inline-flex items-center gap-3 rounded-full border border-orange-200 bg-white/80 px-4 py-2 text-sm font-medium text-orange-700 shadow-sm backdrop-blur-sm dark:border-orange-900/60 dark:bg-slate-950/60 dark:text-orange-300">
+      <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-orange-500" />
+      Đang tải nội dung...
+    </div>
+  </div>
+);
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState<string>(() => {
@@ -71,62 +140,67 @@ export default function App() {
   };
 
   const renderContent = () => {
-    // 1. Dedicated Subpage: Bảng hiệu quảng cáo (/bang-hieu)
     if (currentPath === '/bang-hieu') {
       return (
-        <SignageCategoryPage
-          onNavigate={navigateTo}
-          onOpenConsultation={handleOpenConsultation}
-        />
+        <Suspense fallback={pageFallback}>
+          <SignageCategoryPage
+            onNavigate={navigateTo}
+            onOpenConsultation={handleOpenConsultation}
+          />
+        </Suspense>
       );
     }
 
-    // 2. Dedicated Subpage: Dịch vụ In ấn (/in-an)
     if (currentPath === '/in-an') {
       return (
-        <PrintingCategoryPage
-          onNavigate={navigateTo}
-          onOpenConsultation={handleOpenConsultation}
-        />
+        <Suspense fallback={pageFallback}>
+          <PrintingCategoryPage
+            onNavigate={navigateTo}
+            onOpenConsultation={handleOpenConsultation}
+          />
+        </Suspense>
       );
     }
 
-    // 3. Dedicated Subpage: Dịch vụ in ảnh - hình thẻ lấy ngay (/chup-hinh-the)
     if (currentPath === '/chup-hinh-the' || currentPath === '/photocopy') {
       return (
-        <PhotoIdPage
-          onNavigate={navigateTo}
-          onOpenConsultation={() =>
-            handleOpenConsultation('Dịch vụ in ảnh - hình thẻ lấy ngay')
-          }
-        />
+        <Suspense fallback={pageFallback}>
+          <PhotoIdPage
+            onNavigate={navigateTo}
+            onOpenConsultation={() =>
+              handleOpenConsultation('Dịch vụ in ảnh - hình thẻ lấy ngay')
+            }
+          />
+        </Suspense>
       );
     }
 
-    // 4. Dedicated Subpage: Dịch vụ Chuyển tiền, Gửi tiền nhanh (/chuyen-tien)
     if (currentPath === '/chuyen-tien' || currentPath === '/gui-tien-nhanh') {
       return (
-        <MoneyTransferPage
-          onNavigate={navigateTo}
-          onOpenConsultation={(serviceName) =>
-            handleOpenConsultation(
-              serviceName || 'Dịch vụ Chuyển tiền, Gửi tiền nhanh (Kiên Tân, Ba Hòn, Kiên Lương)'
-            )
-          }
-        />
+        <Suspense fallback={pageFallback}>
+          <MoneyTransferPage
+            onNavigate={navigateTo}
+            onOpenConsultation={(serviceName) =>
+              handleOpenConsultation(
+                serviceName || 'Dịch vụ Chuyển tiền, Gửi tiền nhanh (Kiên Tân, Ba Hòn, Kiên Lương)'
+              )
+            }
+          />
+        </Suspense>
       );
     }
 
-    // Check if path is another service subpage (/decor, /quang-cao)
     const matchingService = SERVICES.find((s) => `/${s.slug}` === currentPath);
     if (matchingService) {
       return (
-        <ServiceDetailPage
-          service={matchingService}
-          onBack={() => navigateTo('/')}
-          onNavigate={navigateTo}
-          onOpenConsultation={() => handleOpenConsultation(matchingService.title)}
-        />
+        <Suspense fallback={pageFallback}>
+          <ServiceDetailPage
+            service={matchingService}
+            onBack={() => navigateTo('/')}
+            onNavigate={navigateTo}
+            onOpenConsultation={() => handleOpenConsultation(matchingService.title)}
+          />
+        </Suspense>
       );
     }
 
@@ -138,9 +212,15 @@ export default function App() {
             description="Thông tin liên hệ, số điện thoại kỹ thuật 0918 321 642, hotline 0888816160 và hình ảnh thực tế cơ sở Minh Tiến tại 160 Quốc lộ 80, Kiên Lương, An Giang."
             canonicalPath={currentPath}
           />
-          <FacilityShowcase />
-          <ContactSection />
-          <LocationMapSection />
+          <Suspense fallback={pageFallback}>
+            <FacilityShowcase />
+          </Suspense>
+          <Suspense fallback={pageFallback}>
+            <ContactSection />
+          </Suspense>
+          <Suspense fallback={pageFallback}>
+            <LocationMapSection />
+          </Suspense>
         </main>
       );
     }
@@ -153,8 +233,12 @@ export default function App() {
             description="Tổng hợp danh mục mẫu bảng hiệu quảng cáo, in ấn name card, tem nhãn, thiệp cưới và công trình thực tế tại cơ sở Minh Tiến Kiên Lương."
             canonicalPath={currentPath}
           />
-          <ProductCategoryShowcase onOpenConsultation={handleOpenConsultation} />
-          <PortfolioSection onOpenConsultation={() => handleOpenConsultation()} />
+          <Suspense fallback={pageFallback}>
+            <ProductCategoryShowcase onOpenConsultation={handleOpenConsultation} />
+          </Suspense>
+          <Suspense fallback={pageFallback}>
+            <PortfolioSection onOpenConsultation={() => handleOpenConsultation()} />
+          </Suspense>
         </main>
       );
     }
@@ -167,51 +251,59 @@ export default function App() {
             description="Danh mục dịch vụ tại cơ sở Minh Tiến 160 Quốc lộ 80 Kiên Lương: thi công bảng hiệu quảng cáo, in ấn thương mại và chụp hình thẻ lấy ngay."
             canonicalPath="/dich-vu"
           />
-          <ServicesOverview
-            onSelectService={handleSelectService}
-            onOpenConsultation={() => handleOpenConsultation()}
-          />
-          <ContactSection />
+          <Suspense fallback={pageFallback}>
+            <ServicesOverview
+              onSelectService={handleSelectService}
+              onOpenConsultation={() => handleOpenConsultation()}
+            />
+          </Suspense>
+          <Suspense fallback={pageFallback}>
+            <ContactSection />
+          </Suspense>
         </main>
       );
     }
 
-    // STREAMLINED HOME PAGE:
-    // Banner + Giới thiệu ngắn + Điểm nổi bật + Các thẻ dẫn link sang từng trang danh mục riêng + FAQ địa phương (kèm Schema FAQPage JSON-LD)
     return (
       <main className="space-y-0 relative z-10">
         <SEOHead
           title="Minh Tiến – In Ấn, Bảng Hiệu Quảng Cáo & Dịch Vụ In Ảnh Hình Thẻ Lấy Ngay Kiên Lương"
-          description="Cơ sở Minh Tiến (160 Quốc lộ 80, Kiên Lương, An Giang) chuyên thiết kế thi công bảng hiệu quảng cáo, in ấn name card, catalogue, tem nhãn, hóa đơn và chụp hình thẻ lấy ngay."
+          description="Cơ sở Minh Tiến (160 Quốc lộ 80, Kiên Lương, An Giang) chuyên thiết kế thi công bảng hiệu quảng cáo, in ấn name card, catalogue, tem nhãn, hóa đơn và chụp hình thẻ."
           canonicalPath="/"
           faqItems={FAQS}
         />
 
-        <Hero
-          onOpenConsultation={() => handleOpenConsultation()}
-          onExploreServices={() => {
-            const el = document.getElementById('danh-muc-chinh');
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth' });
-            } else {
-              navigateTo('/bang-hieu');
-            }
-          }}
-        />
+        <Suspense fallback={pageFallback}>
+          <Hero
+            onOpenConsultation={() => handleOpenConsultation()}
+            onExploreServices={() => {
+              const el = document.getElementById('danh-muc-chinh');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                navigateTo('/bang-hieu');
+              }
+            }}
+          />
+        </Suspense>
 
-        <HomeSummarySection
-          onNavigate={navigateTo}
-          onOpenConsultation={handleOpenConsultation}
-        />
+        <Suspense fallback={pageFallback}>
+          <HomeSummarySection
+            onNavigate={navigateTo}
+            onOpenConsultation={handleOpenConsultation}
+          />
+        </Suspense>
 
-        <FAQSection />
+        <Suspense fallback={pageFallback}>
+          <FAQSection />
+        </Suspense>
       </main>
     );
   };
 
   return (
     <RealImageProvider>
-      <div className="min-h-screen flex flex-col relative text-[#18181B] dark:text-[#F3F4F6] pb-16 lg:pb-0 selection:bg-orange-200 dark:selection:bg-orange-950 selection:text-orange-950 dark:selection:text-orange-200 transition-colors duration-250">
+      <div className="min-h-screen flex flex-col relative text-[#18181B] dark:text-[#F3F4F6] pb-16 lg:pb-0 selection:bg-orange-200 dark:selection:bg-orange-950 selection:text-orange-950 dark:selection:text-orange-200">
         <PastelAmbientBackground intensity="subtle" />
 
         <Header
@@ -221,7 +313,9 @@ export default function App() {
         />
 
         {currentPath === '/' && (
-          <TopPanoramicBanner onOpenConsultation={handleOpenConsultation} />
+          <Suspense fallback={<div className="h-24" />}>
+            <TopPanoramicBanner onOpenConsultation={handleOpenConsultation} />
+          </Suspense>
         )}
 
         <div className="flex-1 relative z-10">{renderContent()}</div>
